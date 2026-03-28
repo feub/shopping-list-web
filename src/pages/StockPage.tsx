@@ -18,7 +18,7 @@ interface ListOption {
 const STORAGE_KEY = 'default_list_id';
 
 export function StockPage() {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const [lists, setLists] = useState<ListOption[]>([]);
   const [selectedListId, setSelectedListId] = useState<string | null>(
     localStorage.getItem(STORAGE_KEY)
