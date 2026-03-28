@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { clsx } from 'clsx';
 import { useAuth } from '../context/AuthContext';
+import { useTheme, type Theme } from '../context/ThemeContext';
 import { AuthService } from '../services/supabase/auth';
 
 export function ProfilePage() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
   const [displayName, setDisplayName] = useState('');
   const [savedName, setSavedName] = useState('');
   const [loading, setLoading] = useState(true);
@@ -89,6 +92,28 @@ export function ProfilePage() {
                   placeholder="Your name"
                   className="rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 placeholder-stone-400 focus:border-orange-500 focus:outline-none dark:border-stone-600 dark:bg-stone-700 dark:text-stone-100 dark:placeholder-stone-500"
                 />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <span className="text-xs font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">
+                  Theme
+                </span>
+                <div className="flex gap-2">
+                  {(['light', 'system', 'dark'] as Theme[]).map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => setTheme(option)}
+                      className={clsx(
+                        'flex-1 rounded-lg border px-3 py-2 text-sm font-medium capitalize transition-colors',
+                        theme === option
+                          ? 'border-orange-500 bg-orange-600 text-white'
+                          : 'border-stone-300 bg-white text-stone-700 hover:border-orange-400 hover:text-orange-600 dark:border-stone-600 dark:bg-stone-700 dark:text-stone-300 dark:hover:border-orange-500 dark:hover:text-orange-400'
+                      )}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {error && (
