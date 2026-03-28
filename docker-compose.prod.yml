@@ -1,0 +1,11 @@
+services:
+  web:
+    image: ghcr.io/feub/shopping-list-web:${VERSION:-latest}
+    ports:
+      - "8080:80"
+    restart: always
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:80/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

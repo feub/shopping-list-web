@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { AuthService } from '../services/supabase/auth';
 import { StockList } from '../components/stock/StockList';
@@ -17,7 +18,7 @@ interface ListOption {
 const STORAGE_KEY = 'default_list_id';
 
 export function StockPage() {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const [lists, setLists] = useState<ListOption[]>([]);
   const [selectedListId, setSelectedListId] = useState<string | null>(
     localStorage.getItem(STORAGE_KEY)
@@ -88,12 +89,12 @@ export function StockPage() {
             {lists.length === 1 && (
               <span className="text-sm text-stone-600 dark:text-stone-400">{lists[0].name}</span>
             )}
-            <button
-              onClick={signOut}
+            <Link
+              to="/profile"
               className="rounded-lg bg-stone-100 px-3 py-1 text-sm text-stone-700 hover:bg-stone-200 dark:bg-stone-700 dark:text-stone-300 dark:hover:bg-stone-600"
             >
-              Sign out
-            </button>
+              Profile
+            </Link>
           </div>
         </div>
       </header>

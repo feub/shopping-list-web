@@ -27,4 +27,23 @@ export class AuthService {
       .eq('user_id', userId);
     return { data, error };
   }
+
+  static async getProfile(userId: string) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id, display_name, created_at')
+      .eq('id', userId)
+      .single();
+    return { data, error };
+  }
+
+  static async updateProfile(userId: string, displayName: string) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({ display_name: displayName.trim() })
+      .eq('id', userId)
+      .select('id, display_name, created_at')
+      .single();
+    return { data, error };
+  }
 }
